@@ -5,13 +5,6 @@
 <img width="100%" src="https://user-images.githubusercontent.com/37598129/99135021-22765280-25ff-11eb-8f9d-edcff1680322.gif">
 <img width="100%" src="https://user-images.githubusercontent.com/37598129/99135018-1db19e80-25ff-11eb-9edc-3cb33409c13d.gif">
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-
-
 ## Installation
 
 Use [yarn](https://classic.yarnpkg.com/pt-BR/docs/install/#debian-stable) or the node package manager [npm](https://www.npmjs.com/get-npm) to install the application.
@@ -26,7 +19,7 @@ yarn
 
 ```bash
 yarn start
-// Or npm start
+// Or npm star
 ```
 ## Contributing / Sugestions
 All sugestions and contributions are welcome! In this case, contact me through the links below
