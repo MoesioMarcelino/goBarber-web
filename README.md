@@ -1,4 +1,4 @@
-# GoBarber Web
+# :rocket: GoBarber Web
 <h4 align="center">
   An application to manage appointments from a barbershop.
 </h4>
