@@ -2,6 +2,7 @@
 <h4 align="center">
   An application to manage appointments from a barbershop.
 </h4>
+<img width="100%" src="https://user-images.githubusercontent.com/37598129/99748231-e8072c80-2aba-11eb-80b7-4d61a102d68b.gif">
 <img width="100%" src="https://user-images.githubusercontent.com/37598129/99135021-22765280-25ff-11eb-8f9d-edcff1680322.gif">
 <img width="100%" src="https://user-images.githubusercontent.com/37598129/99135018-1db19e80-25ff-11eb-9edc-3cb33409c13d.gif">
 

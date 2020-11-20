@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
-import { FiAlertCircle, FiCheckCircle, FiInfo } from 'react-icons/fi';
+import {
+  FiAlertCircle,
+  FiCheckCircle,
+  FiInfo,
+  FiXCircle,
+} from 'react-icons/fi';
 import { ToastProps, useToast } from '../../../hooks/Toast';
 import { Container } from './styles';
 
@@ -31,13 +36,13 @@ const Toast: React.FC<ToastData> = ({ toast, style }) => {
 
   return (
     <Container type={type} style={style}>
-      <FiInfo size={20} />
+      {icons[type || 'info']}
       <div>
         <span>{title}</span>
         <p>{description}</p>
       </div>
       <button onClick={() => removeToast(id)} type="button">
-        {icons[type || 'info']}
+        <FiXCircle size={20} />
       </button>
     </Container>
   );
