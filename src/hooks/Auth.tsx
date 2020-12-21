@@ -4,10 +4,8 @@ import api from '../services/api';
 
 interface User {
   id: string;
+  avatar_url: string;
   name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 interface UserAuthProps {
