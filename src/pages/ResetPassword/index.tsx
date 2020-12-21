@@ -1,56 +1,62 @@
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import React, { useCallback, useRef } from 'react';
-import { FiLock, FiLogIn, FiMail } from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
+import { FiLock } from 'react-icons/fi';
+import { useHistory, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 import logoImg from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { useAuth } from '../../hooks/Auth';
 import { useToast } from '../../hooks/Toast';
+import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { AnimatedContent, Background, Container, Content } from './styles';
 
 interface FormProps {
-  email: string;
   password: string;
+  password_confirmation: string;
 }
 
-const SignIn: React.FC = () => {
+const ResetPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn } = useAuth();
   const { addToast } = useToast();
   const history = useHistory();
+  const location = useLocation();
 
   const handleSubmit = useCallback(
     async (data: FormProps) => {
       formRef.current?.setErrors({});
       try {
         const schema = Yup.object().shape<FormProps>({
-          email: Yup.string()
-            .email('Digite um e-mail válido')
-            .required('E-mail obrigatório'),
           password: Yup.string().required('Senha obrigatória'),
+          password_confirmation: Yup.string()
+            .oneOf([Yup.ref('password'), ''], 'Confirmação incorreta')
+            .required(),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        const { email, password } = data;
+        const { password, password_confirmation } = data;
+        const token = location.search.replace('?token=', '');
 
-        await signIn({
-          email,
+        if (!token) {
+          throw new Error();
+        }
+
+        await api.post('/password/reset', {
           password,
+          password_confirmation,
+          token,
         });
 
         addToast({
-          title: `Olá, seja bem vindo(a)!`,
+          title: `Senha alterada com sucesso!`,
         });
 
-        history.push('/dashboard');
+        history.push('/');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -60,12 +66,12 @@ const SignIn: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro de Autenticação',
-          description: 'Verifique as credenciais e tente novamente!',
+          title: 'Erro ao resetar senha',
+          description: 'Ocorreu um erro ao resetar sua senha, tente novamente!',
         });
       }
     },
-    [signIn, addToast, history],
+    [addToast, history, location],
   );
 
   return (
@@ -75,24 +81,24 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu logon</h1>
+            <h1>Resetar senha</h1>
 
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
               icon={FiLock}
               type="password"
-              placeholder="Senha"
+              placeholder="Nova senha"
             />
 
-            <Button type="submit">Entrar</Button>
+            <Input
+              name="password_confirmation"
+              icon={FiLock}
+              type="password"
+              placeholder="Confirmação da senha"
+            />
 
-            <Link to="forgot-password">Esqueci minha senha</Link>
+            <Button type="submit">Alterar senha</Button>
           </Form>
-          <Link to="/signup">
-            <FiLogIn />
-            Criar conta
-          </Link>
         </AnimatedContent>
       </Content>
       <Background />
@@ -100,4 +106,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default ResetPassword;

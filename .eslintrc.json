@@ -34,6 +34,7 @@
     "import/prefer-default-export": "off",
     "react/jsx-one-expression-per-line": "off",
     "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
@@ -49,6 +50,14 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "camelcase": ["off"]
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {}
