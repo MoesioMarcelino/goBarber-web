@@ -25,6 +25,7 @@ import withoutAvatar from '../../assets/without-avatar.svg';
 import { useAuth } from '../../hooks/Auth';
 
 import api from '../../services/api';
+import { useToast } from '../../hooks/Toast';
 
 interface MonthAvailabilityItem {
   day: number;
@@ -50,6 +51,7 @@ const Dashboard: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   const { signOut, user } = useAuth();
+  const { addToast } = useToast();
 
   const handleDayChange = useCallback((day, modifiers: DayModifiers) => {
     if (modifiers.available && !modifiers.disabled) {
@@ -133,6 +135,14 @@ const Dashboard: React.FC = () => {
     );
   }, [appointments]);
 
+  const handleSignOut = useCallback(() => {
+    signOut();
+
+    addToast({
+      title: 'Até breve',
+    });
+  }, [signOut, addToast]);
+
   return (
     <Container>
       <Header>
@@ -147,7 +157,7 @@ const Dashboard: React.FC = () => {
             </div>
           </Profile>
 
-          <button onClick={signOut} type="button">
+          <button onClick={handleSignOut} type="button">
             <FiPower />
           </button>
         </HeaderContent>
