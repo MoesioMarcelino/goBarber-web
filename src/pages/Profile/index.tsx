@@ -110,26 +110,29 @@ const Profile: React.FC = () => {
         });
       }
     },
-    [addToast, history],
+    [addToast, history, updateUser],
   );
 
-  const handleAvatarChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const data = new FormData();
+  const handleAvatarChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const data = new FormData();
 
-      data.append('avatar', e.target.files[0]);
+        data.append('avatar', e.target.files[0]);
 
-      api.patch('/users/avatar', data).then((response) => {
-        updateUser(response.data);
+        api.patch('/users/avatar', data).then((response) => {
+          updateUser(response.data);
 
-        addToast({
-          type: 'success',
-          title: 'Avatar',
-          description: 'Avatar atualizado com sucesso!',
+          addToast({
+            type: 'success',
+            title: 'Avatar',
+            description: 'Avatar atualizado com sucesso!',
+          });
         });
-      });
-    }
-  }, []);
+      }
+    },
+    [addToast, updateUser],
+  );
 
   return (
     <Container>
