@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 
 interface ToastProps {
   type?: 'info' | 'success' | 'error';
-  hasDescription: number;
 }
 
 const types = {
